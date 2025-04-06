@@ -1,8 +1,33 @@
 import Counter from './counter'
 import StateWork from './StateWork'
 import './App.css'
+import Users from '../user'
+import { Suspense } from 'react'
+import Friends from './friends'
+import Post from './post'
+
+// const fetchUsers = fetch('https://jsonplaceholder.typicode.com/users')
+// .then(res => res.json())
+
+// const fetchFriends =async () =>{
+// const  res = await fetch ('https://jsonplaceholder.typicode.com/users');
+// return res.json();
+
+// }
+
+const fetchPost =async()=>{
+  const res = await fetch('https://jsonplaceholder.typicode.com/posts');
+  return res.json();
+}
 
 function App() {
+
+const postPromise = fetchPost();
+
+
+
+
+  // const friendsPromise =fetchFriends();
  
 
   function handleBite (){
@@ -21,8 +46,22 @@ alert(newValue)
 
   return (
     <>
-     
       <h2>Vite + React</h2>
+
+
+<Suspense fallback={<h4>Data is feteching from api</h4>}>
+<Post postPromise ={postPromise}></Post>
+</Suspense>
+
+
+    {/* <Suspense fallback={<h3>Data Fetching wait for moment</h3>}>
+      <Users fetchUsers={fetchUsers}></Users>
+    </Suspense>
+    <Suspense fallback={<h3>Friends will come to wish you </h3>}>
+    <Friends friendsPromise= {friendsPromise}></Friends>
+    </Suspense> */}
+
+      
       <StateWork></StateWork>
       <Counter></Counter>
      <button onClick={handleBite}>Bite Me</button>
